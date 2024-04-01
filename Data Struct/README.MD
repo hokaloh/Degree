@@ -1,5 +1,5 @@
 
-![saktiXuthm]<p align="center"><img src="images/saktiXuthm.png">
+<p align="center"><img src="images/saktiXuthm.png">
 
 # Data Structure
 
