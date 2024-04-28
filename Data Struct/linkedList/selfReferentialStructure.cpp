@@ -20,10 +20,10 @@ int main(){
 
     // link 
     node1.next = &node2;
-    node2.next = NULL;
+    //node2.next = NULL;
 
 
-    printf("%c", node1.next->data);
+    printf("%c", node2.next->data);
 
 
 }
