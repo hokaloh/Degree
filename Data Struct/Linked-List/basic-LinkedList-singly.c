@@ -1,14 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Flow Basic Linked List 
 // create object 
 // initialize object 
 // allocate memory 
 // assign data value
 // connect node
 // decision head 
-
-// 
 
 // create object
 struct Node {
@@ -25,7 +24,7 @@ void printLinkedList(struct Node *head){
 
 int main(){
     
-    // initialize object 
+    // initialize object   
     struct Node *head = NULL;
     struct Node *first = NULL;
     struct Node *second = NULL;
@@ -42,19 +41,13 @@ int main(){
     third->Data = 30;
 
     //connect node
-    first->next = second;
-    second->next = third;
-    third->next = NULL;
+    first->next = third;
+    third->next = second;
+    second->next = NULL;
 
-    // decision head
+    // decision head for first
     head = first;
 
     printLinkedList(head);
-
-
-
-
-
-
 
 }
