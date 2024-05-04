@@ -55,7 +55,7 @@ int main(){
     Nodee *head = newNode(1);
     head -> next = newNode(2);
     head -> next -> next = newNode(3);
-    head -> next -> next -> next = newNode(4);
+    //head -> next -> next -> next = newNode(4);
 
     //printf("node count = %d", countLink(head));
 

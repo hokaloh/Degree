@@ -4,7 +4,7 @@
 #define SIZE 5
 // define size of stack 
 
-//create pointer 'top' to keep track item in stack
+//create 'top' to keep track item in stack
 int top =-1;
 
 // create variable size stack 

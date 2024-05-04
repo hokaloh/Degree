@@ -21,16 +21,18 @@ void push(int input){
     }
 
     new_node->data=input;
-    new_node->next=NULL;
+    //new_node->next=NULL;
 
     // make new node next link to exist top 
     new_node -> next = top; 
     top = new_node;
 }
 
-void pop(struct node *temp){
-    if(temp == NULL){
+void pop(){
+    if(top == NULL){
         printf("Stack underflow!");
+    } else {
+        top = top -> next;
     }
 }
 
@@ -58,6 +60,9 @@ int main(){
             printf("Insert Number: ");
             scanf("%d",&input);
             push(input);
+            break;
+        case 2:
+            pop();
             break;
         case 3: 
             show();
