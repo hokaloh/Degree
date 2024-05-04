@@ -41,16 +41,11 @@ int main(){
         newNode = malloc(sizeof(struct node));
         newNode->next = NULL;
 
-        // checking head is empty  
+        newNode -> data = array[i];
+        
         if(head == NULL){
             newNode -> data = array[i];
-            newNode -> next = tail;
-            head = newNode;
-            tail = newNode;
-        } else {
-            newNode -> data = array[i];
-            tail -> next = newNode;
-            tail = newNode;
+            head 
         }
 
     }

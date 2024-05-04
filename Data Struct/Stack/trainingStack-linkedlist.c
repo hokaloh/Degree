@@ -28,6 +28,12 @@ void push(int input){
     top = new_node;
 }
 
+void pop(struct node *temp){
+    if(temp == NULL){
+        printf("Stack underflow!");
+    }
+}
+
 void show(){
     struct node *temp;
     temp = top;
