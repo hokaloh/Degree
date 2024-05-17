@@ -39,7 +39,7 @@ void pop(){
 void show(){
     struct node *temp;
     temp = top;
-    while(temp){
+    while( temp != NULL){
         printf("%d", temp->data);
         temp = temp->next;
     } 

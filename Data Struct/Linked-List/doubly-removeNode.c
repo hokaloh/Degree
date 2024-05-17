@@ -31,7 +31,7 @@ void deleteNode(int loca){
     struct node *prevtemp=head;
 
     if(loca == 1 ){
-        head = temp -> next;
+        head = prevtemp -> next;
     } else {
         while(loca != 1){
             prevtemp=temp;
@@ -77,6 +77,8 @@ int main(){
 
         addNode(nodeData);
     }
+
+    deleteNode(1);
      
     printNode();
 
