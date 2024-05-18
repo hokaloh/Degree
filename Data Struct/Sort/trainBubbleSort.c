@@ -2,8 +2,21 @@
 #include <stdlib.h>
 
 
-void bubbleSort(int arr, int lenght){
+void outputBubbleSort(int arr[], int lenght){
+    for(int x=0; x<lenght;x++){
+        printf("\n%d", arr[x]);
+    }
+}
 
+void bubbleSort(int arr[], int lenght){
+    for(int j=0;j<lenght-1;j++){
+        if(arr[j] > arr[j+1]){
+            int temp = arr[j];
+            arr[j] = arr[j+1];
+            arr[j+1] = temp;
+        }
+    }
+    outputBubbleSort(arr, lenght);
 }
 
 int main(){
@@ -11,5 +24,5 @@ int main(){
     // 20 / 4
     int lenght =  sizeof(arr) / sizeof(arr[0]);
 
-    printf("%d", sizeof(arr[1]));
+    bubbleSort(arr,lenght);
 }

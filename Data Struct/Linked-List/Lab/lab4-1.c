@@ -12,12 +12,13 @@ struct employee{
     struct employee *next; 
 }*head=NULL, *tempHead=NULL;
 
-int count(){
+int countNode(){
     struct employee *loop=NULL;
     loop = head;
     int count=0;
     while(loop!=NULL){
         count++;
+        loop = loop->next;
     }
     return count;
 
@@ -35,6 +36,7 @@ void create_insertRecord(){
     // printf("Enter Salary: ");
     // scanf("%f", &newRecord->salary);
     newRecord->next=NULL;
+    tempHead = head;
 
     if(head==NULL){
         newRecord->employeeID=1;
@@ -53,8 +55,6 @@ void remove_deleteRecord(){
     int deleteID;
     printf("\nDelete Record by ID : ", &deleteID);
 
-    
-
     tempHead=head;
     trackRecord=head->next;
     // while(tempHead!=NULL){
@@ -67,25 +67,24 @@ void remove_deleteRecord(){
 }  
 
 void display_record(){
-    // while(head!=NULL){
-    //     printf("\n%d", head->employeeID);
-    //     head =head-> next;
-    // };
     struct employee *temp=NULL;
     temp=head;
-    for(int x; x<count();x++){
-        printf("\n%d", temp->employeeID);
-        temp=temp-> next;  
+    int count = countNode();
+
+    while(temp!=NULL){
+        printf("\n%d", temp->age);
+        temp=temp->next;
     }
 }
 
 int main(){
     int menu;
+    printf("\nSingle Linked List");
     while(1){
-        printf("\nSingle Linked List\n");
-        printf("[1] Create and insert record\n");
+        printf("\n[1] Create and insert record\n");
         printf("[2] Remove or delete existing record\n");
         printf("[3] Display records\n");
+        printf("[4] Count Node\n");
         printf(": ");
         scanf("%d", &menu);
         switch (menu){
@@ -97,6 +96,9 @@ int main(){
                 break;
             case 3: 
                 display_record();
+                break;
+            case 4: 
+                printf("%d", countNode());
                 break;
             default:
                 break;
