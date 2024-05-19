@@ -104,14 +104,13 @@ void display_record(){
         break;
     }
     printf("\n");
-    
 
 }
 
 int main(){
     int menu;
     while(1){
-        printf("\n### Single Linked List ###");
+        printf("\n### Doubly Linked List ###");
         printf("\n[1] Create and insert record\n");
         printf("[2] Remove or delete existing record\n");
         printf("[3] Display records\n");
