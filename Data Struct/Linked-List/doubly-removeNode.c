@@ -78,7 +78,7 @@ int main(){
         addNode(nodeData);
     }
 
-    deleteNode(1);
+    deleteNode(3);
      
     printNode();
 
