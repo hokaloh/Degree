@@ -24,7 +24,6 @@ void bubbleSort(int arr[], int length){
             }
         }
     }
-
     //Output
     outputBubbleSort(arr,length);
 }
@@ -32,7 +31,6 @@ void bubbleSort(int arr[], int length){
 int main(){
     int arr[] = {70,60,30,20,23,38};
     int length = sizeof(arr) / sizeof(arr[0]);
-
 
     bubbleSort(arr,length);
 }
