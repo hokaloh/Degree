@@ -1,0 +1,3 @@
+strcmp = https://www.freecodecamp.org/news/strcmp-in-c-how-to-compare-strings-in-c/
+ascii table = https://www.ascii-code.com 
+method = https://en.wikipedia.org/wiki/Lexicographic_order [group order of z]

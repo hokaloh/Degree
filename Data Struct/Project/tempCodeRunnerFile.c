@@ -1,2 +1,3 @@
-printf("%d", count);
-    // exit(0);
+if (!swapped) {
+        //     break;
+        // }
