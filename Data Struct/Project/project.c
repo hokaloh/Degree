@@ -25,39 +25,9 @@ struct animals* swap(struct animals *p1, struct animals *p2) {
     return p2;
 }
 
-// struct animals ascendingAnimals(int count){
-//     struct animals ascendingAnimals; 
-
-//     // https://www.ascii-code.com
-
-//     for(int x=0;x<count;x++){
-
-//         ascendingAnimals = *head;
-
-//         for(int y=0;y<count-x-1;y++){
-        
-//             p1 = head;
-//             p2 = p1->next;
-
-//             if(p1->name[y] > p2 -> name[y]){
-//                 ascendingAnimals = swap(p1,p2);
-//             }
-
-//             ascendingAnimals = ascendingAnimals->next;
-//         }
-//     }
-
-
-
-//     return ascendingAnimals;
-// }
-
 struct animals* ascendingAnimals() {
     int count = countNode();
 
-    // if (head == NULL || count < 2) {
-    //     return head;
-    // }
     for (int x = 0; x < count; x++) {
         struct animals* current = head;
         struct animals* prev = NULL;
@@ -80,7 +50,7 @@ struct animals* ascendingAnimals() {
                 prev = current;
                 current = current->next;
             }
-            //kira++;
+
         }
     }
 
@@ -112,61 +82,124 @@ void displayAnimals(){
     struct animals descending=descendingAnimals(countNode());
 } 
 
+void deleteAnimal(struct animals **lang, int locationNode){
+    // delete node animal
+    struct animals *temp=*lang; 
+    struct animals *prevtemp=*lang;
 
-void insertingAnimal(char *data){
+    if(locationNode == 1 ){
+        *lang = prevtemp -> next;
+    } else {
+        while(locationNode != 1){
+            prevtemp=temp;
+            temp = temp->next;
+            locationNode = locationNode - 1;
+        }
+        prevtemp -> next = temp -> next;
+    }
+
+}
+
+void insertingAnimal(struct animals **lang, char *data){  
     
     struct animals *newAnimal;
     newAnimal = malloc(sizeof(struct animals));
     newAnimal->next = NULL;
 
-    if(head == NULL){
+    if(lang == NULL){
         //newAnimal->name = data;
         strcpy(newAnimal->name, data);
-        head = newAnimal;
+        *lang = newAnimal;
     } else {
         //newAnimal->name = data;
         strcpy(newAnimal->name, data);
-        newAnimal->next = head;
-        head = newAnimal;
+        newAnimal->next = *lang;
+        *lang = newAnimal;
     }
 
 }
 
+void selectionAnimal(struct animals **lang){
+    int selection;
+    printf("\n\nChoose Selection of Animals: [1]InsertNew [2]Delete [3]search [4]update [5]Display in Sorting");
+    scanf("%d",&selection);
+
+    switch(selection){
+        case 1:{
+            char animal[100];
+            printf("\nEnter the name newAnimals: ");
+            scanf("%s", animal);
+            insertingAnimal(lang, animal);
+            break;
+        };
+        case 2:{
+            int locationAnimal;
+            printf("\nEnter the number location deleteAnimals: ");
+            scanf("%d", &locationAnimal);
+            deleteAnimal(lang, locationAnimal);
+            break;
+        };
+    }
+}
 
 int main(){
     //use pointer to avoid waste memory
     // https://www.geeksforgeeks.org/array-of-strings-in-c/
-    //char *data[] = {"rabbit", "cow", "bird", "snake", "giraffe", "kangaroo", "goat", "tiger", "crocodile", "bat", "horse", "penguin", "deer", "butterfly", "fish"};
 
-    char *data[] = {"Faiz", "Ammar", "Yus", "Kamal", "Abu Bakar"};
+    char *data[2][15] = {
+        {"rabbit", "cow", "bird", "snake", "giraffe", "kangaroo", "goat", "tiger", "crocodile", "bat", "horse", "penguin", "deer", "butterfly", "fish"},
+        {"arnab", "lembu", "burung", "ular", "zirafah", "kanggaru", "kambing", "harimau", "buaya", "kelawar", "kuda", "penguin", "rusa", "rama", "ikan"}
+    };
 
     // sizeof(data) is total size of data array in bytes
     // chac is 4 bytes
-    int countData = sizeof(data)/sizeof(data[0]);
 
-    for(int x=0;x<countData; x++){
-        insertingAnimal(data[x]);
+    int language;
+    printf("Select Language: [1]English [2]Bahasa Malaysia\n: ");
+    scanf("%d", &language);
+    
+    if(language == 1){
+        int countData = sizeof(data[0])/sizeof(data[0][0]);
+        for(int num=0;num<countData;num++) printf("%s, ", data[0][num]); 
+
+        struct animals *english = NULL;
+
+        for(int num=0;num<countData;num++) insertingAnimal(&english, data[0][num]);
+
+        selectionAnimal(&english);
+        
+        //print linked list
+        struct animals *current = english;
+
+        while(current != NULL){
+            printf("%s", current->name);
+            current = current->next;
+        };
+        exit(0);
+
+    } else if (language == 2){
+        int countData = sizeof(data[0])/sizeof(data[1][0]);
+        for(int num=0;num<countData;num++) printf("%s ", data[1][num]);
+
+        struct animals bahasaMalaysia;
+ 
+    }else {
+        exit(0);
     }
+    exit(0);
+
+    
+
+
+    // int count;
+    // for(int x=0; x<countData;x++){
+    //     count++;
+    // }
+    // printf("%d", count);
+
+            
+    //exit(0);
 
     displayAnimals();
-
-    // temp=head;
-
-    // if(temp->name[0] > head->next->name[0] ){
-    //     printf("%c", head->next->name[0]);
-    // }
-
-    //fish 13010820 102
-    //butterfly 12542060  98
-    //deer 12269900
-        
-        
-    exit(0);
-    
-
-    // for(int x;x<countNode();x++){
-    //     for()
-    // }
-    
 
 }

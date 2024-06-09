@@ -40,8 +40,6 @@ void deleteNode(int loca){
         }
         prevtemp -> next = temp -> next;
     }
-
-
 }
 
 
