@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 struct animals{
     struct animals *prev;
@@ -82,6 +83,28 @@ void displayAnimals(){
     struct animals descending=descendingAnimals(countNode());
 } 
 
+void searchAnimal(struct animals **lang, char *nameAnimal){
+    // case sensitive counter 
+    for(int i = 0; nameAnimal[i]; i++) nameAnimal[i] = tolower(nameAnimal[i]);
+
+    struct animals *loop=*lang; 
+
+    int index=0;
+    int resolveIssue=0;
+    while(loop!=NULL){
+        if(strcmp(loop->name,nameAnimal) == 0){
+            printf("Name %s in index node [%d]", nameAnimal, index);
+            resolveIssue++;
+            break;
+        }
+        index++;
+        loop = loop->next;
+    }
+    if(resolveIssue==0){
+        printf("Name %s not node Linked-list", nameAnimal);
+    }
+}
+
 void deleteAnimal(struct animals **lang, int locationNode){
     // delete node animal
     struct animals *temp=*lang; 
@@ -121,15 +144,15 @@ void insertingAnimal(struct animals **lang, char *data){
 
 void selectionAnimal(struct animals **lang){
     int selection;
-    printf("\n\nChoose Selection of Animals: [1]InsertNew [2]Delete [3]search [4]update [5]Display in Sorting");
+    printf("\n\nChoose Selection of Animals: [1]InsertNew [2]Delete [3]search [4]update [5]Display in Sorting\n: ");
     scanf("%d",&selection);
 
+    char nameAnimal[100];
     switch(selection){
         case 1:{
-            char animal[100];
             printf("\nEnter the name newAnimals: ");
-            scanf("%s", animal);
-            insertingAnimal(lang, animal);
+            scanf("%s", nameAnimal);
+            insertingAnimal(lang, nameAnimal);
             break;
         };
         case 2:{
@@ -139,6 +162,12 @@ void selectionAnimal(struct animals **lang){
             deleteAnimal(lang, locationAnimal);
             break;
         };
+        case 3:{
+            printf("\nEnter The name of animals: ");
+            scanf("%s", &nameAnimal);
+            searchAnimal(lang, nameAnimal);
+            break;
+        }
     }
 }
 
@@ -160,7 +189,7 @@ int main(){
     
     if(language == 1){
         int countData = sizeof(data[0])/sizeof(data[0][0]);
-        for(int num=0;num<countData;num++) printf("%s, ", data[0][num]); 
+        for(int num=0;num<countData;num++) printf("%s ", data[0][num]); 
 
         struct animals *english = NULL;
 
