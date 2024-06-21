@@ -2,106 +2,136 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 struct animals{
     struct animals *prev;
     char name[10000];
     struct animals *next;
-}*head=NULL, *temp=NULL, *p1=NULL, *p2=NULL;
-
-int countNode(){
-    temp=head;
-    int count=0;
-    while(temp!=NULL){
-        temp = temp->next;
-        count++;
-    }    
-    return count;
-}
+}*p1=NULL, *p2=NULL;
 
 struct animals* swap(struct animals *p1, struct animals *p2) {
-    struct animals* temp = p2->next;
+    //struct animals* temp = p2->next;
+    p1->next = p2->next;
     p2->next = p1;
-    p1->next = temp;
     return p2;
 }
 
-struct animals* ascendingAnimals() {
-    int count = countNode();
+void ascendingAnimals(struct animals **lang){
+    struct animals *loop=*lang;
 
-    for (int x = 0; x < count; x++) {
-        struct animals* current = head;
-        struct animals* prev = NULL;
+    while (loop != NULL) {
+        struct animals *current = *lang;
+        struct animals *prev = NULL;
 
-        
         while (current != NULL && current->next != NULL) {
-            struct animals* p1 = current;
-            struct animals* p2 = current->next;
+            struct animals *p1 = current;
+            struct animals *p2 = current->next;
 
             if (strcmp(p1->name, p2->name) > 0) {
                 if (prev == NULL) {
-                    head = swap(p1, p2);
-                    prev = head;
+                    *lang = swap(p1, p2);
+                    prev = *lang;
                 } else {
                     prev->next = swap(p1, p2);
                     prev = prev->next;
                 }
-
             } else {
                 prev = current;
                 current = current->next;
             }
-
         }
+        loop = loop->next;
+    }
+}
+void descendingAnimals(struct animals **lang){
+    struct animals *loop=*lang;
+
+     while (loop != NULL) {
+        struct animals *current = *lang;
+        struct animals *prev = NULL;
+
+        while (current != NULL && current->next != NULL) {
+            struct animals *p1 = current;
+            struct animals *p2 = current->next;
+
+            if (strcmp(p1->name, p2->name) < 0) {
+                if (prev == NULL) {
+                    *lang = swap(p1, p2);
+                    prev = *lang;
+                } else {
+                    prev->next = swap(p1, p2);
+                    prev = prev->next;
+                }
+            } else {
+                prev = current;
+                current = current->next;
+            }
+        }
+        loop = loop->next;
     }
 
-
-    return head;
 }
 
+void displayAnimals(struct animals **lang){
 
-struct animals descendingAnimals(int count){
-    struct animals descendingAnimals;
-
-    descendingAnimals = *head;
-
-    return descendingAnimals;
-}
-
-void displayAnimals(){
     printf("Ascending:\n");
-    
-    struct animals *ascending = ascendingAnimals();
-
+    ascendingAnimals(lang);
+    struct animals *ascending = *lang;
     while (ascending != NULL) {
-        printf("%s\n", ascending->name);
+        printf("%s ", ascending->name);
         ascending = ascending->next;
     }
-    exit(0);
 
-    printf("\nDescending:\n");
-    struct animals descending=descendingAnimals(countNode());
+    // *lang = head;
+    
+    // printf("\nDescending:\n");
+    // descendingAnimals(lang);
+    // struct animals *descending = *lang;
+    // while (descending != NULL) {
+    //     printf("%s ", descending->name);
+    //     descending = descending->next;
+    // }
 } 
 
-void searchAnimal(struct animals **lang, char *nameAnimal){
-    // case sensitive counter 
-    for(int i = 0; nameAnimal[i]; i++) nameAnimal[i] = tolower(nameAnimal[i]);
+char *upperLower(char *animal){
+    for(int i = 0; animal[i]; i++){
+        animal[i] = tolower(animal[i]);
+    }
+    return animal;
+}
 
+void updateAnimal(struct animals **lang, char *nameAnimal, char *newAnimal){
+    struct animals *loop=*lang; 
+
+    int found = 0;
+    while (loop != NULL) {
+        if (strcmp(loop->name,nameAnimal) == 0) {
+            strcpy(loop->name,newAnimal);
+            found=1;
+        }
+        loop = loop->next;
+    } 
+    if(found==0){
+        printf("Record with name '%s' not found.\n", nameAnimal);
+    }
+}
+
+void searchAnimal(struct animals **lang, char *nameAnimal){
     struct animals *loop=*lang; 
 
     int index=0;
-    int resolveIssue=0;
+    int found=0;
     while(loop!=NULL){
         if(strcmp(loop->name,nameAnimal) == 0){
-            printf("Name %s in index node [%d]", nameAnimal, index);
-            resolveIssue++;
-            break;
+            printf("Record with Name '%s' in index node [%d].\n", nameAnimal, index);
+            found=1;
         }
         index++;
         loop = loop->next;
     }
-    if(resolveIssue==0){
-        printf("Name %s not node Linked-list", nameAnimal);
+    if(found==0){
+        printf("Record with name '%s' not found.\n", nameAnimal);
     }
 }
 
@@ -120,7 +150,6 @@ void deleteAnimal(struct animals **lang, int locationNode){
         }
         prevtemp -> next = temp -> next;
     }
-
 }
 
 void insertingAnimal(struct animals **lang, char *data){  
@@ -144,31 +173,49 @@ void insertingAnimal(struct animals **lang, char *data){
 
 void selectionAnimal(struct animals **lang){
     int selection;
-    printf("\n\nChoose Selection of Animals: [1]InsertNew [2]Delete [3]search [4]update [5]Display in Sorting\n: ");
-    scanf("%d",&selection);
+    while(1) {
+        printf("\n\nChoose Selection of Animals: [1]InsertNew [2]Delete [3]search [4]update [5]Display in Sorting\n: ");
+        scanf("%d",&selection);
 
-    char nameAnimal[100];
-    switch(selection){
-        case 1:{
-            printf("\nEnter the name newAnimals: ");
-            scanf("%s", nameAnimal);
-            insertingAnimal(lang, nameAnimal);
-            break;
-        };
-        case 2:{
-            int locationAnimal;
-            printf("\nEnter the number location deleteAnimals: ");
-            scanf("%d", &locationAnimal);
-            deleteAnimal(lang, locationAnimal);
-            break;
-        };
-        case 3:{
-            printf("\nEnter The name of animals: ");
-            scanf("%s", &nameAnimal);
-            searchAnimal(lang, nameAnimal);
-            break;
+        char nameAnimal[100];
+        char newAnimal[100];
+        switch(selection){
+            case 1:{
+                printf("\nEnter the name newAnimals: ");
+                scanf("%s", nameAnimal);
+                insertingAnimal(lang, nameAnimal);
+                break;
+            };
+            case 2:{
+                int locationAnimal;
+                printf("\nEnter the number location deleteAnimals: ");
+                scanf("%d", &locationAnimal);
+                deleteAnimal(lang, locationAnimal);
+                break;
+            };
+            case 3:{
+                printf("\nEnter The name of animals: ");
+                scanf("%s", &nameAnimal);
+                searchAnimal(lang, upperLower(nameAnimal));
+                break;
+            };
+            case 4:{
+                printf("\nEnter The name of animals to update: ");
+                scanf("%s", &nameAnimal);
+                printf("Enter The name of new animals: ");
+                scanf("%s", &newAnimal);            
+                updateAnimal(lang, upperLower(nameAnimal), upperLower(newAnimal));
+                break;
+            }
+            case 5:
+                 
+                displayAnimals(lang);
+                break;
+            default:
+                break;
         }
     }
+
 }
 
 int main(){
@@ -229,6 +276,6 @@ int main(){
             
     //exit(0);
 
-    displayAnimals();
+    //displayAnimals();
 
 }

@@ -1,6 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Example of Book details
+// Author : Weiss Michelle 
+// Publish Date: 2014 
+// Title : Data Structures and Algorithm in C++ 
+// Edition : 4th ed
+// Publication by : Boston: Pearson
+// Call Number: QA76.73.C153. W44 2014 
+// Manipulation of Books are Insert New Book by Alphabetical Order.
+
+
 struct employee{
     struct employee *prev; 
     int employeeID;
