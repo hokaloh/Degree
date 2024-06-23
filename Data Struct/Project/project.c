@@ -8,7 +8,7 @@ struct animals{
     struct animals *prev;
     char name[10000];
     struct animals *next;
-}*p1=NULL, *p2=NULL;
+};
 
 struct animals* swap(struct animals *p1, struct animals *p2) {
     //struct animals* temp = p2->next;
@@ -17,10 +17,10 @@ struct animals* swap(struct animals *p1, struct animals *p2) {
     return p2;
 }
 
-void ascendingAnimals(struct animals **lang){
-    struct animals *loop=*lang;
-
-    while (loop != NULL) {
+void ascendingAnimals(struct animals **lang) {
+    bool swapped;
+    do {
+        swapped = false;
         struct animals *current = *lang;
         struct animals *prev = NULL;
 
@@ -36,18 +36,19 @@ void ascendingAnimals(struct animals **lang){
                     prev->next = swap(p1, p2);
                     prev = prev->next;
                 }
+                swapped = true;
             } else {
                 prev = current;
                 current = current->next;
             }
         }
-        loop = loop->next;
-    }
+    } while (swapped);
 }
-void descendingAnimals(struct animals **lang){
-    struct animals *loop=*lang;
 
-     while (loop != NULL) {
+void descendingAnimals(struct animals **lang) {
+    bool swapped;
+    do {
+        swapped = false;
         struct animals *current = *lang;
         struct animals *prev = NULL;
 
@@ -63,19 +64,28 @@ void descendingAnimals(struct animals **lang){
                     prev->next = swap(p1, p2);
                     prev = prev->next;
                 }
+                swapped = true;
             } else {
                 prev = current;
                 current = current->next;
             }
         }
-        loop = loop->next;
-    }
+    } while (swapped);
+}
+struct animals* copyList(struct animals *lang) {
+    if (lang == NULL) return NULL;
 
+    struct animals* newHead = malloc(sizeof(struct animals));
+    strcpy(newHead->name, lang->name);
+    newHead->next = copyList(lang->next);
+    return newHead;
 }
 
 void displayAnimals(struct animals **lang){
 
-    printf("Ascending:\n");
+    struct animals *copy = copyList(*lang);  // Create a copy of the list lang
+
+    printf("\nAscending:\n");
     ascendingAnimals(lang);
     struct animals *ascending = *lang;
     while (ascending != NULL) {
@@ -83,15 +93,15 @@ void displayAnimals(struct animals **lang){
         ascending = ascending->next;
     }
 
-    // *lang = head;
-    
-    // printf("\nDescending:\n");
-    // descendingAnimals(lang);
-    // struct animals *descending = *lang;
-    // while (descending != NULL) {
-    //     printf("%s ", descending->name);
-    //     descending = descending->next;
-    // }
+    printf("\n");
+
+    printf("Descending:\n");
+    descendingAnimals(&copy); 
+    struct animals *descending = copy;  
+    while (descending != NULL) {
+        printf("%s ", descending->name);
+        descending = descending->next;
+    }
 } 
 
 char *upperLower(char *animal){
@@ -174,7 +184,7 @@ void insertingAnimal(struct animals **lang, char *data){
 void selectionAnimal(struct animals **lang){
     int selection;
     while(1) {
-        printf("\n\nChoose Selection of Animals: [1]InsertNew [2]Delete [3]search [4]update [5]Display in Sorting\n: ");
+        printf("\n\nChoose Selection of Animals: [1]InsertNew [2]Delete [3]search [4]update [5]Display in Sorting [6]Exit\n: ");
         scanf("%d",&selection);
 
         char nameAnimal[100];
@@ -187,8 +197,14 @@ void selectionAnimal(struct animals **lang){
                 break;
             };
             case 2:{
+                printf("\nhere current animal:\n");
+                struct animals *print=*lang;
+                while (print!=NULL){
+                    printf("%s ", print->name);
+                    print = print->next;
+                };
                 int locationAnimal;
-                printf("\nEnter the number location deleteAnimals: ");
+                printf("\n\nEnter the number location deleteAnimals: ");
                 scanf("%d", &locationAnimal);
                 deleteAnimal(lang, locationAnimal);
                 break;
@@ -208,9 +224,10 @@ void selectionAnimal(struct animals **lang){
                 break;
             }
             case 5:
-                 
                 displayAnimals(lang);
                 break;
+            case 6: 
+                exit(0);
             default:
                 break;
         }
@@ -219,16 +236,11 @@ void selectionAnimal(struct animals **lang){
 }
 
 int main(){
-    //use pointer to avoid waste memory
-    // https://www.geeksforgeeks.org/array-of-strings-in-c/
 
     char *data[2][15] = {
         {"rabbit", "cow", "bird", "snake", "giraffe", "kangaroo", "goat", "tiger", "crocodile", "bat", "horse", "penguin", "deer", "butterfly", "fish"},
         {"arnab", "lembu", "burung", "ular", "zirafah", "kanggaru", "kambing", "harimau", "buaya", "kelawar", "kuda", "penguin", "rusa", "rama", "ikan"}
     };
-
-    // sizeof(data) is total size of data array in bytes
-    // chac is 4 bytes
 
     int language;
     printf("Select Language: [1]English [2]Bahasa Malaysia\n: ");
@@ -236,46 +248,31 @@ int main(){
     
     if(language == 1){
         int countData = sizeof(data[0])/sizeof(data[0][0]);
+        printf("\n|============================================================================|");
+        printf("\n|------------------------------Here Data Exist-------------------------------|\n\n ");
         for(int num=0;num<countData;num++) printf("%s ", data[0][num]); 
+        printf("\n|----------------------------------------------------------------------------");
 
         struct animals *english = NULL;
-
+        // insert data array into linked list  
         for(int num=0;num<countData;num++) insertingAnimal(&english, data[0][num]);
 
         selectionAnimal(&english);
-        
-        //print linked list
-        struct animals *current = english;
-
-        while(current != NULL){
-            printf("%s", current->name);
-            current = current->next;
-        };
-        exit(0);
 
     } else if (language == 2){
-        int countData = sizeof(data[0])/sizeof(data[1][0]);
-        for(int num=0;num<countData;num++) printf("%s ", data[1][num]);
+        int countData = sizeof(data[0])/sizeof(data[0][0]);
+        printf("\n|============================================================================|");
+        printf("\n|------------------------------Here Data Exist-------------------------------|\n\n ");
+        for(int num=0;num<countData;num++) printf("%s ", data[1][num]); 
+        printf("\n|----------------------------------------------------------------------------");
 
-        struct animals bahasaMalaysia;
+        struct animals *bahasaMelayu = NULL;
+        // insert data array into linked list  
+        for(int num=0;num<countData;num++) insertingAnimal(&bahasaMelayu, data[1][num]);
+
+        selectionAnimal(&bahasaMelayu);
  
     }else {
         exit(0);
     }
-    exit(0);
-
-    
-
-
-    // int count;
-    // for(int x=0; x<countData;x++){
-    //     count++;
-    // }
-    // printf("%d", count);
-
-            
-    //exit(0);
-
-    //displayAnimals();
-
 }

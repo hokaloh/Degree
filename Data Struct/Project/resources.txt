@@ -1,3 +1,4 @@
 strcmp = https://www.freecodecamp.org/news/strcmp-in-c-how-to-compare-strings-in-c/
 ascii table = https://www.ascii-code.com 
+memory waste = https://www.geeksforgeeks.org/array-of-strings-in-c/
 method = https://en.wikipedia.org/wiki/Lexicographic_order [group order of z]
