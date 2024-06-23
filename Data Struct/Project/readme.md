@@ -6,4 +6,4 @@
 
 Here my architecture of the project >_< : 
 
-![architecture](..\images\arch_project.png)
+![architecture](images\arch_project.png)
