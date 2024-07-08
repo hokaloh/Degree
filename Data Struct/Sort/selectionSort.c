@@ -3,9 +3,13 @@
 
 
 void selectionSort(int arr[], int sizearr){
+    // loop semua 
     for(int i=0; i<sizearr; i++){
+        // kita simpan first iteration index 
         int min = i;
+        // loop untuk next iteration 
         for(int j=i+1; j<sizearr; j++){
+            // sekiranya value before this 
             if(arr[j] < arr[min]){
                 min=j;
             }

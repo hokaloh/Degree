@@ -18,18 +18,17 @@ struct bst *newNodeCreate(int value){
 }
 
 struct bst *insertNode(struct bst *root, int value){
+    // check root, if NULL buat jadi root
     if(root == NULL){
-        //printf("%d", value);
         return newNodeCreate(value);
     } 
-
+    // check if new data lebih kecil dgn existing root 
     if(value < root->data){
         // kiri
-        //printf("%d", value);
+        // masukkan bawah node 
         root->left = insertNode(root->left, value);
     } else {
         // kanan
-        //printf("%d", value);
         root->right = insertNode(root->right, value);
     }
 }
