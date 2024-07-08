@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdbool.h>
 
 // Example of Book details
 // Author : Weiss Michelle 
@@ -11,14 +14,16 @@
 // Manipulation of Books are Insert New Book by Alphabetical Order.
 
 
-struct employee{
-    struct employee *prev; 
-    int employeeID;
-    char firstName[100];
-    char lastName[100];
-    int age;
-    float salary;
-    struct employee *next;
+struct book{
+    struct book *prev; 
+    int bookID;
+    char Author[100];
+    char Date[100];
+    char Title[100];
+    char Edition[100];
+    char Publication[100];
+    char callNumber[100];
+    struct book *next;
 }*head=NULL,*tail=NULL,*temp=NULL, *prevtemp=NULL;
 
 int countNode(){
@@ -31,18 +36,18 @@ int countNode(){
     return count;
 }
 
-void delete_Employee(){
+void delete_book(){
     int ID;
-    printf("Enter Employee ID: ");
+    printf("Enter book ID: ");
     scanf("%d", &ID);
     temp = head;
 
-    if(temp->employeeID == ID){
+    if(temp->bookID == ID){
         head = temp->next; 
         return;
     }
 
-    while(temp->employeeID != ID){
+    while(temp->bookID != ID){
         prevtemp = temp;
         temp = temp->next;
     }
@@ -50,33 +55,78 @@ void delete_Employee(){
     prevtemp->next = temp->next;
 }
 
+struct book* swap(struct book *p1, struct book *p2) {
+    //struct animals* temp = p2->next;
+    p1->next = p2->next;
+    p2->next = p1;
+    return p2;
+}
 
-void add_Employee(){
+void ascendingBook(struct book **book) {
+    bool swapped;
+    do {
+        swapped = false;
+        struct animals *current = *book;
+        struct animals *prev = NULL;
 
-    struct employee *newRecord;
-    newRecord = malloc(sizeof(struct employee));
+        while (current != NULL && current->next != NULL) {
+            struct animals *p1 = current;
+            struct animals *p2 = current->next;
+
+            if (strcmp(p1->name, p2->name) > 0) {
+                if (prev == NULL) {
+                    *book = swap(p1, p2);
+                    prev = *book;
+                } else {
+                    prev->next = swap(p1, p2);
+                    prev = prev->next;
+                }
+                swapped = true;
+            } else {
+                prev = current;
+                current = current->next;
+            }
+        }
+    } while (swapped);
+}
+
+
+void add_book(){
+
+    struct book *newRecord;
+    newRecord = malloc(sizeof(struct book));
     newRecord->prev = NULL;
     newRecord->next = NULL;
 
-    printf("\nEnter First Name: ");
-    scanf("%s", newRecord->firstName);
-    printf("Enter Last Name: ");
-    scanf("%s", newRecord->lastName);
-    printf("Enter age: ");
-    scanf("%d", &newRecord->age);
-    printf("Enter Salary: ");
-    scanf("%f", &newRecord->salary);
+    printf("\nEnter Name Author: ");
+    scanf("%s", newRecord->Author);
+    while (getchar() != '\n');  
+    printf("Enter Date: ");
+    scanf("%s", newRecord->Date);
+    while (getchar() != '\n');  
+    printf("Enter Title: ");
+    scanf("%s", newRecord->Title);
+    while (getchar() != '\n');  
+    printf("Enter Edition: ");
+    scanf("%s", newRecord->Edition);
+    while (getchar() != '\n');  
+    printf("Enter Publication: ");
+    scanf("%s", newRecord->Publication);
+    while (getchar() != '\n');  
+    printf("Enter callNumber: ");
+    scanf("%s", newRecord->callNumber);
+    while (getchar() != '\n');  
 
     if(head==NULL){
-        newRecord->employeeID=1;
+        newRecord->bookID=1;
         head=newRecord;
         tail=newRecord;        
     } else {
-        newRecord->employeeID=tail->employeeID+1;
+        newRecord->bookID=tail->bookID+1;
         tail -> next = newRecord;
         newRecord -> prev = tail;
         tail=newRecord;
-    }   
+    } 
 }
 
 
@@ -89,24 +139,26 @@ void display_record(){
 
     switch (choose){
     case 1:
-        printf("\n***Exist Data OF Employee***");
+        printf("\n***Exist Data OF book***");
         while(temp !=NULL){
-            printf("\n\nEmployee ID: %d", temp->employeeID);
-            printf("\nFirst Name: %s", temp->firstName);
-            printf("\nLast Name: %s", temp->lastName);
-            printf("\nAge: %d", temp->age);
-            printf("\nSalary: %.2f", temp->salary);
+            printf("\nFirst Name: %s", temp->Author);
+            printf("\nFirst Name: %s", temp->Date);
+            printf("\nFirst Name: %s", temp->Title);
+            printf("\nFirst Name: %s", temp->Edition);
+            printf("\nFirst Name: %s", temp->Publication);
+            printf("\nLast Name: %s", temp->callNumber);
             temp = temp -> next;
         }
         break;
     case 2: 
-        printf("\n***Exist Data OF Employee***");
+        printf("\n***Exist Data OF book***");
         while(prevtemp !=NULL){
-            printf("\n\nEmployee ID: %d", prevtemp->employeeID);
-            printf("\nFirst Name: %s", prevtemp->firstName);
-            printf("\nLast Name: %s", prevtemp->lastName);
-            printf("\nAge: %d", prevtemp->age);
-            printf("\nSalary: %.2f", prevtemp->salary);
+            printf("\nFirst Name: %s", temp->Author);
+            printf("\nFirst Name: %s", temp->Date);
+            printf("\nFirst Name: %s", temp->Title);
+            printf("\nFirst Name: %s", temp->Edition);
+            printf("\nFirst Name: %s", temp->Publication);
+            printf("\nLast Name: %s", temp->callNumber);
             prevtemp = prevtemp -> prev;
         }
         break;
@@ -129,10 +181,11 @@ int main(){
         scanf("%d", &menu);
         switch (menu){
             case 1:
-                add_Employee();
+                add_book();
+                ascendingBook(&head);  
                 break;
             case 2: 
-                delete_Employee();
+                delete_book();
                 break;
             case 3: 
                 display_record();
