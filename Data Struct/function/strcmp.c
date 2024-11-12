@@ -9,12 +9,12 @@ int main(){
     int result;
 
 
-    char data[2][3] = {
-        {'9','2','5'},
-        {'4','7','7'}
-    };
+    // char data[2][3] = {
+    //     {'9','2','5'},
+    //     {'4','7','7'}
+    // };
 
-    printf("%c", data[0][2]); // Prints '9'
+    // printf("%c", data[0][2]); // Prints '9'
 
     // printf("%", name1);
     // exit(0);
@@ -27,6 +27,8 @@ int main(){
 
     // result = strcmp(name1, name2);
     // printf("%d", result);
+
+    
 
 
 }
