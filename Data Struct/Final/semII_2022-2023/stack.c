@@ -27,6 +27,7 @@ void pop(struct node **head){
         printf("Stack Underflow");
     }
     // kita alihkan node yang first head pegang ke second node head pegang 
+    
     *head = (*head)->next;
 }
 

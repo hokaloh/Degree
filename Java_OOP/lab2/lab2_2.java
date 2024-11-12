@@ -1,5 +1,3 @@
-package lab2;
-
 public class lab2_2 {
     static int[] num_a = {1,2,3,4,5}; 
     static int[] num_b = {2,3,4,5,6};
