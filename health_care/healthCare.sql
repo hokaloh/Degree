@@ -22,7 +22,7 @@ CREATE TABLE `appoitments` (
     `appoiment_id` INT AUTO_INCREMENT,
     `datetime` DATETIME,
     `user_id` INT NOT NULL,
-    `fees` INT NOT NULL
+    `fees` INT NOT NULL,
     `doctor_id` INT NOT NULL,
     PRIMARY KEY (`appoiment_id`),
     FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
